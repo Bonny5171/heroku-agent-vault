@@ -1,0 +1,6 @@
+#!/bin/sh
+
+echo "-----> Setting Node.js specific configurations"
+echo "NODE_ENV=production" >> $BUILD_DIR/.env
+
+echo "-----> Node.js buildpack release finished"

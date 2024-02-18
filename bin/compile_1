@@ -1,0 +1,74 @@
+#!/bin/bash
+
+# Baixar a versão desejada do Vault
+# VAULT_VERSION="1.8.2"  # Substitua pela versão desejada
+# VAULT_ZIP="vault_${VAULT_VERSION}_linux_amd64.zip"
+# wget "https://releases.hashicorp.com/vault/${VAULT_VERSION}/${VAULT_ZIP}"
+
+# # Descompactar o arquivo baixado
+# unzip "$VAULT_ZIP"
+
+# # Adicionar o diretório atual ao PATH temporariamente
+# # export PATH="$PATH:$(pwd)"
+
+# # Verificar se a instalação foi bem-sucedida
+# vault --version
+
+# vault login hvs.fwpPyv1VFS3POPy1QlJ6ijVG
+
+# openssl genrsa -out chave-privada.pem 2048
+# # openssl req -new -x509 -key chave-privada.pem -out certificado.pem -days 365
+
+# # Gerar o certificado autoassinado
+# openssl req -new -key chave-privada.pem -x509 -days 365 -out certificado.pem \
+#     -subj "/C=BR/ST=SaoPaulo/L=SaoPaulo/O=Exemplo/CN=exemplo.com"
+
+
+# Register cert in vault
+# vault write auth/cert/certs/my-role \
+#     policies=default \
+#     certificate=@certificado.pem \
+#     ttl=3600
+
+#--------------------------------------------------------
+
+# Variáveis de configuração
+VAULT_ADDR="https://vault-cgny-41bd57b8411e.herokuapp.com"
+VAULT_TOKEN="hvs.fwpPyv1VFS3POPy1QlJ6ijVG"
+
+# Array com os caminhos das secretas
+# CAMINHOS_SECRET=(
+#     "job-purge/data/HEROKU_POSTGRESQL_SILVER_URL"
+#     "league-of-legends-app/data/DATABASE_URL_TESTE"
+#     "job-purge/metadata/DEBUG_HIDE_DATE"
+# )
+CAMINHOS_SECRET=(
+    "job-purge/HEROKU_POSTGRESQL_SILVER_URL"
+    "league-of-legends-app/DATABASE_URL_TESTE"
+    "job-purge/DEBUG_HIDE_DATE"
+)
+
+# Função para obter uma secreta
+get_secret() {
+    local caminho="$1"
+    local secret_data=$(curl -s \
+        --header "X-Vault-Token: $VAULT_TOKEN" \
+        --request GET \
+        "$VAULT_ADDR/v1/$caminho")
+    
+    # Verificar se a solicitação foi bem-sucedida
+    if [ "$(echo "$secret_data" | node_modules/.bin/jq -r '.errors')" != "null" ]; then
+        echo "Erro ao obter a secret em $caminho:"
+        echo "$secret_data" | node_modules/.bin/jq -r '.errors'
+        return 1
+    fi
+    
+    # Extrair os dados da secret
+    echo "Dados da secret em $caminho:"
+    echo "$secret_data" | node_modules/.bin/jq '.data'
+}
+
+# Iterar sobre os caminhos das secretas e obter cada uma
+for caminho_secret in "${CAMINHOS_SECRET[@]}"; do
+    get_secret "$caminho_secret"
+done
