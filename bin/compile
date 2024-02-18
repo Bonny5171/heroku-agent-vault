@@ -32,8 +32,6 @@ get_secret() {
         return 1
     fi
     
-    echo $secret_data
-
     data=$(echo $secret_data | jq -r '.data.data')
     echo $data | jq -r 'to_entries | .[] | "\(.key)=\(.value)"'
 
@@ -49,6 +47,12 @@ get_secret() {
     # echo "$secret_data" | jq '.data'
 }
 
+echo "O primeiro parâmetro é: $0"
+echo "O primeiro parâmetro é: $1"
+echo "O segundo parâmetro é: $2"
+echo "O segundo parâmetro é: $3"
+echo "O segundo parâmetro é: $4"
+
 if [ -f .env ]; then
     env_file=".env"
     backup_suffix=".backup_$(date +"%Y%m%d%H%M%S")"
@@ -61,6 +65,6 @@ else
 fi
 
 # Iterar sobre os caminhos das secretas e obter cada uma
-for caminho_secret in "${CAMINHOS_SECRET[@]}"; do
-    get_secret "$caminho_secret"
-done
+# for caminho_secret in "${CAMINHOS_SECRET[@]}"; do
+#     get_secret "$caminho_secret"
+# done
