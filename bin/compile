@@ -16,7 +16,6 @@ CAMINHOS_SECRET=(
     "job-purge/data/DEBUG_HIDE_DATE"
 )
 
-npm install jq-cli-wrapper
 
 # Função para obter uma secreta
 get_secret() {
@@ -27,27 +26,27 @@ get_secret() {
         "$VAULT_ADDR/v1/$caminho")
     
     # Verificar se a solicitação foi bem-sucedida
-    if [ "$(echo "$secret_data" | node_modules/.bin/jq -r '.errors')" != "null" ]; then
+    if [ "$(echo "$secret_data" | jq -r '.errors')" != "null" ]; then
         echo "Erro ao obter a secret em $caminho:"
-        echo "$secret_data" | node_modules/.bin/jq -r '.errors'
+        echo "$secret_data" | jq -r '.errors'
         return 1
     fi
     
     echo $secret_data
 
-    data=$(echo $secret_data | node_modules/.bin/jq -r '.data.data')
-    echo $data | node_modules/.bin/jq -r 'to_entries | .[] | "\(.key)=\(.value)"'
+    data=$(echo $secret_data | jq -r '.data.data')
+    echo $data | jq -r 'to_entries | .[] | "\(.key)=\(.value)"'
 
     echo "Adicionando a chave KEY ao arquivo .env."
     echo "# Path: $1" >> .env
-    echo $data | node_modules/.bin/jq -r 'to_entries | .[] | "\(.key)=\(.value)"' >> .env
+    echo $data | jq -r 'to_entries | .[] | "\(.key)=\(.value)"' >> .env
     echo "\n" >> .env
     echo "Chave adicionada com sucesso."
 
     
     # Extrair os dados da secret
     # echo "Dados da secret em $caminho:"
-    # echo "$secret_data" | node_modules/.bin/jq '.data'
+    # echo "$secret_data" | jq '.data'
 }
 
 if [ -f .env ]; then
