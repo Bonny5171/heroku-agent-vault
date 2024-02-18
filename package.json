@@ -1,0 +1,12 @@
+{
+  "name": "heroku-agent-vault",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "echo 'Building the app'",
+    "dev": "sh ./bin/compile",
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "jq-cli-wrapper": "^1.6.1"
+  }
+}
