@@ -51,7 +51,9 @@ echo "O primeiro parâmetro é: $0"
 echo "O primeiro parâmetro é: $1"
 echo "O segundo parâmetro é: $2"
 echo "O segundo parâmetro é: $3"
-echo "O segundo parâmetro é: $4"
+echo "O segundo parâmetro custorm é: $PORT"
+echo "O segundo parâmetro custorm é: $ABC"
+echo "O segundo parâmetro custorm é: $XPTO"
 
 if [ -f .env ]; then
     env_file=".env"
