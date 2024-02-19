@@ -80,27 +80,29 @@ get_secret() {
     data=$(echo $secret_data | jq -r '.data.data')
     echo $data | jq -r 'to_entries | .[] | "\(.key)=\(.value)"'
 
-    echo "# Path: $1" >> .env
+    echo "# Path: $1" >> "$BUILD_DIR/.env"
 
-    # ESCREVE NO ARQUIVO .ENV
-    # echo $data | jq -r 'to_entries | .[] | "\(.key)=\(.value)"' >> .env
-    # echo "\n" >> .env
+    # VS ESCREVE NO ARQUIVO .ENV
+    echo $data | jq -r 'to_entries | .[] | "\(.key)=\(.value)"' >> "$BUILD_DIR/.env"
+    echo "\n" >> "$BUILD_DIR/.env"
 
+    # EXPORT .ENV
      echo $data | jq -r 'to_entries | .[] | "env \(.key)=\(.value)"'
      $data | jq -r 'to_entries | .[] | "env \(.key)=\(.value)"'
 }
 #------------------------------------------------------------------------------
 
-    # if [ -f .env ]; then
-    #     env_file=".env"
-    #     backup_suffix=".backup_$(date +"%Y%m%d%H%M%S")"
-    #     echo "O arquivo .env existe, renomeando para $env_file$backup_suffix..."
-    #     mv "$env_file" "$env_file$backup_suffix"
-    # else
-    #     echo "O arquivo .env não existe. Criando..."
-    #     touch .env
-    #     echo "Arquivo .env criado com sucesso."
-    # fi
+    if [ -f BUILD_DIR/.env ]; then
+        # env_file=".env"
+        env_file="$BUILD_DIR/.env"
+        backup_suffix=".backup_$(date +"%Y%m%d%H%M%S")"
+        echo "O arquivo .env existe, renomeando para $env_file$backup_suffix..."
+        mv "$env_file" "$env_file$backup_suffix"
+    else
+        echo "O arquivo .env não existe. Criando..."
+        touch .env
+        echo "Arquivo .env criado com sucesso."
+    fi
 
 pwd
 ls -an "${BUILD_DIR}"
