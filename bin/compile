@@ -5,6 +5,12 @@ BUILD_DIR=$1
 CACHE_DIR=$2
 ENV_DIR=$3
 
+
+echo "O 1$ é: $BUILD_DIR"
+echo "O 2$ é: $CACHE_DIR"
+echo "O 3$ é: $ENV_DIR"
+
+
 # load required environment variables
 # ROLE_ID=$(<"$ENV_DIR/ROLE_ID")
 # SECRETE_ID=$(<"$ENV_DIR/SECRETE_ID")
@@ -14,8 +20,8 @@ if [[ -z $ENV_DIR ]]; then
     CAMINHOS_SECRET_STR=$(<"$ENV_DIR/CAMINHOS_SECRET")
 fi
 
-echo "O segundo parâmetro custorm VAULT_ADDR é: $VAULT_ADDR"
-echo "O segundo parâmetro custorm VAULT_TOKEN é: $VAULT_TOKEN"
+echo "O parâmetro custorm VAULT_ADDR é: $VAULT_ADDR"
+echo "O parâmetro custorm VAULT_TOKEN é: $VAULT_TOKEN"
 
 # Lendo a string para o array
 declare -a CAMINHOS_SECRET
