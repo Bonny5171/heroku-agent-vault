@@ -2,6 +2,7 @@
 
 # ARGs
 BUILD_DIR=$1
+CACHE_DIR=$2
 ENV_DIR=$3
 
 # load required environment variables
@@ -82,6 +83,7 @@ get_secret() {
         else
             # Se a propriedade não existir, adiciona ao arquivo .env
             echo "$key=$value" >> "$BUILD_DIR/.env"
+            echo "$key=$value" >> "$CACHE_DIR/.env"
             echo "A propriedade '$key' foi adicionada ao arquivo .env"
         fi
     done <<< "$formatted_string"
@@ -121,7 +123,8 @@ get_secret() {
 #  MAIN
 if [ -f "$BUILD_DIR/.env" ]; then
     echo "O arquivo .env existe, renomeando para $env_file$backup_suffix..."
-    echo "\n" >> "$BUILD_DIR/.env"
+    # echo "\n" >> "$BUILD_DIR/.env"
+    # echo "\n" >> "$CACHE_DIR/.env"
 
     # Flow of backup
     # env_file="$BUILD_DIR/.env"
@@ -130,6 +133,7 @@ if [ -f "$BUILD_DIR/.env" ]; then
 else
     echo "O arquivo .env não existe. Criando..."
     touch "$BUILD_DIR/.env"
+    touch "$CACHE_DIR/.env"
     echo "Arquivo .env criado com sucesso."
 fi
 
