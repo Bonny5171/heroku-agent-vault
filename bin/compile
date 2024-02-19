@@ -102,6 +102,7 @@ get_secret() {
     # fi
 
 pwd
+ls -an "${BUILD_DIR}"
 
 # Iterar sobre os caminhos das secretas e obter cada uma
 for caminho_secret in "${CAMINHOS_SECRET[@]}"; do
