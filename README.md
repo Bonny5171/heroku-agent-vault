@@ -49,7 +49,8 @@ heroku config:set CAMINHOS_SECRET_STR=[secrets_separadas_por_espaço] -a nome-da
 
 ```
 
-# 3 - Push com limpeza de Cache de buil da Heroku: "apos qualquer atualização da var: VAULT_SECRETS"
+# 3 - Push com limpeza de Cache de buil da Heroku:
+Apos toda atualização da var "VAULT_SECRETS" deve-se realizar este push com limpeza de cache.
 As variaveis serão injetadas antes do build da aplicação.
 ```
 heroku builds:cache:purge --confirm=[APP_NAME] && \
