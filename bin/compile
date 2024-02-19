@@ -8,9 +8,11 @@ ENV_DIR=$3
 # load required environment variables
 # ROLE_ID=$(<"$ENV_DIR/ROLE_ID")
 # SECRETE_ID=$(<"$ENV_DIR/SECRETE_ID")
-VAULT_ADDR=$(<"$ENV_DIR/VAULT_ADDR")
-VAULT_TOKEN=$(<"$ENV_DIR/VAULT_TOKEN")
-CAMINHOS_SECRET_STR=$(<"$ENV_DIR/CAMINHOS_SECRET")
+if [[ -z $ENV_DIR ]]; then
+    VAULT_ADDR=$(<"$ENV_DIR/VAULT_ADDR")
+    VAULT_TOKEN=$(<"$ENV_DIR/VAULT_TOKEN")
+    CAMINHOS_SECRET_STR=$(<"$ENV_DIR/CAMINHOS_SECRET")
+fi
 
 # Lendo a string para o array
 declare -a CAMINHOS_SECRET
@@ -29,16 +31,23 @@ read -r -a CAMINHOS_SECRET <<< "$CAMINHOS_SECRET_STR"
 if [[ -z $VAULT_ADDR ]]; then
     echo "Did you forget to set VAULT_ADDR?"
     exit 1
+else
+    # Obtém o diretório atual
+    VAULT_ADDR=$VAULT_ADDR
 fi
 
 if [[ -z $VAULT_TOKEN ]]; then
     echo "Did you forget to set VAULT_TOKEN?"
     exit 1
+else
+    VAULT_TOKEN=$VAULT_TOKEN
 fi
 
 if [[ -z $CAMINHOS_SECRET ]]; then
     echo "Did you forget to set CAMINHOS_SECRET?"
     exit 1
+else
+    CAMINHOS_SECRET=$CAMINHOS_SECRET
 fi
 
 echo "O 0 parâmetro é: $0"
@@ -53,7 +62,8 @@ echo "O segundo parâmetro custorm CAMINHOS_SECRET é: $CAMINHOS_SECRET"
 # Função para obter uma secreta
 get_secret() {
     local caminho="$1"
-    echo "# Path: $caminho"
+    echo "---------------------------------------------------------------"
+    echo "Path Vault sercret: $caminho"
 
     local secret_data=$(curl -s \
         --header "X-Vault-Token: $VAULT_TOKEN" \
@@ -70,7 +80,7 @@ get_secret() {
     data=$(echo $secret_data | jq -r '.data.data')
 
     # SOMENTE LOG
-    echo $data
+    # echo $data
     echo $data | jq -r 'to_entries | .[] | "\(.key)=\(.value)"'
 
     # Converter a string JSON para o formato key=value
@@ -83,7 +93,7 @@ get_secret() {
         else
             # Se a propriedade não existir, adiciona ao arquivo .env
             echo "$key=$value" >> "$BUILD_DIR/.env"
-            echo "$key=$value" >> "$CACHE_DIR/.env"
+            # echo "$key=$value" >> "$CACHE_DIR/.env"
             echo "A propriedade '$key' foi adicionada ao arquivo .env"
         fi
     done <<< "$formatted_string"
@@ -133,7 +143,7 @@ if [ -f "$BUILD_DIR/.env" ]; then
 else
     echo "O arquivo .env não existe. Criando..."
     touch "$BUILD_DIR/.env"
-    touch "$CACHE_DIR/.env"
+    # touch "$CACHE_DIR/.env"
     echo "Arquivo .env criado com sucesso."
 fi
 
