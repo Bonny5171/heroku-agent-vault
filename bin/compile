@@ -115,21 +115,25 @@ get_secret() {
             -d "{\"$key\": \"$value\"}"
     '
 }
-#------------------------------------------------------------------------------
 
-    if [ -f "$BUILD_DIR/.env" ]; then
-        echo "O arquivo .env existe, renomeando para $env_file$backup_suffix..."
-        echo "\n" >> "$BUILD_DIR/.env"
 
-        # env_file="$BUILD_DIR/.env"
-        # backup_suffix=".backup_$(date +"%Y%m%d%H%M%S")"
-        # mv "$env_file" "$env_file$backup_suffix"
-    else
-        echo "O arquivo .env não existe. Criando..."
-        touch "$BUILD_DIR/.env"
-        echo "Arquivo .env criado com sucesso."
-    fi
 
+#  MAIN
+if [ -f "$BUILD_DIR/.env" ]; then
+    echo "O arquivo .env existe, renomeando para $env_file$backup_suffix..."
+    echo "\n" >> "$BUILD_DIR/.env"
+
+    # Flow of backup
+    # env_file="$BUILD_DIR/.env"
+    # backup_suffix=".backup_$(date +"%Y%m%d%H%M%S")"
+    # mv "$env_file" "$env_file$backup_suffix"
+else
+    echo "O arquivo .env não existe. Criando..."
+    touch "$BUILD_DIR/.env"
+    echo "Arquivo .env criado com sucesso."
+fi
+
+# LOGS
 # echo "$BUILD_DIR/.env"
 # pwd
 # ls -an "${BUILD_DIR}"
