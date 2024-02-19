@@ -52,7 +52,7 @@ fi
 
 # Array com os caminhos das secretas
 # CAMINHOS_SECRET=("job-purge/data/HEROKU_POSTGRESQL_SILVER_URL" "league-of-legends-app/data/DATABASE_URL_TESTE" "job-purge/data/DEBUG_HIDE_DATE")
-CAMINHOS_SECRET_X=(CAMINHOS_SECRET)
+
 
 # Função para obter uma secreta
 get_secret() {
@@ -107,6 +107,6 @@ else
 fi
 
 # Iterar sobre os caminhos das secretas e obter cada uma
-for caminho_secret in "${CAMINHOS_SECRET_X[@]}"; do
+for caminho_secret in "${CAMINHOS_SECRET[@]}"; do
     get_secret "$caminho_secret"
 done
