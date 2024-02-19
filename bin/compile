@@ -2,12 +2,11 @@
 
 # ARGs
 BUILD_DIR=$1
-CACHE_DIR=$2
 ENV_DIR=$3
 
 # load required environment variables
-ROLE_ID=$(<"$ENV_DIR/ROLE_ID")
-SECRETE_ID=$(<"$ENV_DIR/SECRETE_ID")
+# ROLE_ID=$(<"$ENV_DIR/ROLE_ID")
+# SECRETE_ID=$(<"$ENV_DIR/SECRETE_ID")
 VAULT_ADDR=$(<"$ENV_DIR/VAULT_ADDR")
 VAULT_TOKEN=$(<"$ENV_DIR/VAULT_TOKEN")
 CAMINHOS_SECRET_STR=$(<"$ENV_DIR/CAMINHOS_SECRET")
@@ -16,20 +15,15 @@ CAMINHOS_SECRET_STR=$(<"$ENV_DIR/CAMINHOS_SECRET")
 declare -a CAMINHOS_SECRET
 read -r -a CAMINHOS_SECRET <<< "$CAMINHOS_SECRET_STR"
 
-if [[ -z $ROLE_ID ]]; then
-    echo "Did you forget to set ROLE_ID?"
-    exit 1
-fi
+# if [[ -z $ROLE_ID ]]; then
+#     echo "Did you forget to set ROLE_ID?"
+#     exit 1
+# fi
 
-if [[ -z $SECRETE_ID ]]; then
-    echo "Did you forget to set SECRETE_ID?"
-    exit 1
-fi
-
-if [[ -z $SECRETE_ID ]]; then
-    echo "Did you forget to set SECRETE_ID?"
-    exit 1
-fi
+# if [[ -z $SECRETE_ID ]]; then
+#     echo "Did you forget to set SECRETE_ID?"
+#     exit 1
+# fi
 
 if [[ -z $VAULT_ADDR ]]; then
     echo "Did you forget to set VAULT_ADDR?"
@@ -46,14 +40,10 @@ if [[ -z $CAMINHOS_SECRET ]]; then
     exit 1
 fi
 
-
 echo "O 0 parâmetro é: $0"
 echo "O 1 parâmetro é: $1"
-echo "O 2 parâmetro é: $2"
-echo "O 3 parâmetro é: $3"
-
-echo "O segundo parâmetro custorm ROLE_ID é: $ROLE_ID"
-echo "O segundo parâmetro custorm SECRETE_ID é: $SECRETE_ID"
+# echo "O segundo parâmetro custorm ROLE_ID é: $ROLE_ID"
+# echo "O segundo parâmetro custorm SECRETE_ID é: $SECRETE_ID"
 echo "O segundo parâmetro custorm VAULT_ADDR é: $VAULT_ADDR"
 echo "O segundo parâmetro custorm VAULT_TOKEN é: $VAULT_TOKEN"
 echo "O segundo parâmetro custorm CAMINHOS_SECRET é: $CAMINHOS_SECRET"
@@ -62,7 +52,6 @@ echo "O segundo parâmetro custorm CAMINHOS_SECRET é: $CAMINHOS_SECRET"
 # Função para obter uma secreta
 get_secret() {
     local caminho="$1"
-
     echo "# Path: $caminho"
 
     local secret_data=$(curl -s \
@@ -78,34 +67,72 @@ get_secret() {
     fi
     
     data=$(echo $secret_data | jq -r '.data.data')
+
+    # SOMENTE LOG
+    echo $data
     echo $data | jq -r 'to_entries | .[] | "\(.key)=\(.value)"'
 
-    echo "# Path: $1" >> "$BUILD_DIR/.env"
+    # Converter a string JSON para o formato key=value
+    formatted_string=$(echo "$data" | jq -r 'to_entries|map("\(.key)=\(.value|tostring)")|.[]')
+    # Percorre as propriedades e valores
+    while IFS='=' read -r key value; do
+        # Verifica se a propriedade já existe no .env
+        if grep -q "^$key=" "$BUILD_DIR/.env"; then
+            echo "A propriedade '$key' já existe no arquivo .env"
+        else
+            # Se a propriedade não existir, adiciona ao arquivo .env
+            echo "$key=$value" >> "$BUILD_DIR/.env"
+            echo "A propriedade '$key' foi adicionada ao arquivo .env"
+        fi
+    done <<< "$formatted_string"
 
-    # VS ESCREVE NO ARQUIVO .ENV
-    echo $data | jq -r 'to_entries | .[] | "\(.key)=\(.value)"' >> "$BUILD_DIR/.env"
-    echo "\n" >> "$BUILD_DIR/.env"
+    # ESCREVE DIRETO NO ARQUIVO .ENV
+    # echo "# Path: $1" >> "$BUILD_DIR/.env"
+    # echo $data | jq -r 'to_entries | .[] | "\(.key)=\(.value)"' >> "$BUILD_DIR/.env"
+    # echo "\n" >> "$BUILD_DIR/.env"
 
-    # EXPORT .ENV
-     echo $data | jq -r 'to_entries | .[] | "env \(.key)=\(.value)"'
-     $data | jq -r 'to_entries | .[] | "env \(.key)=\(.value)"'
+
+
+    # HINT!
+    # EXPORT DIRETO NO DYNO .ENV
+    # echo $data | jq -r 'to_entries | .[] | "env \(.key)=\(.value)"'
+    # $data | jq -r 'to_entries | .[] | "env \(.key)=\(.value)"'
+
+    # HINT!
+    : ' heroku config:set MINHA_VARIAVEL=meu-valor'
+
+    # HINT!
+    : '
+        export HEROKU_API_KEY="ASDASDASD"
+        export APP_NAME="$APP_NAME"
+        export VARIAVEL="MINHA_VARIAVEL"
+        export VALOR="meu-valor"
+
+        curl -n -X PATCH https://api.heroku.com/apps/$APP_NAME/config-vars \
+            -H "Authorization: Bearer $HEROKU_API_KEY" \
+            -H "Accept: application/vnd.heroku+json; version=3" \
+            -H "Content-Type: application/json" \
+            -d "{\"$key\": \"$value\"}"
+    '
 }
 #------------------------------------------------------------------------------
 
-    if [ -f BUILD_DIR/.env ]; then
-        # env_file=".env"
-        env_file="$BUILD_DIR/.env"
-        backup_suffix=".backup_$(date +"%Y%m%d%H%M%S")"
+    if [ -f "$BUILD_DIR/.env" ]; then
         echo "O arquivo .env existe, renomeando para $env_file$backup_suffix..."
-        mv "$env_file" "$env_file$backup_suffix"
+        echo "\n" >> "$BUILD_DIR/.env"
+
+        # env_file="$BUILD_DIR/.env"
+        # backup_suffix=".backup_$(date +"%Y%m%d%H%M%S")"
+        # mv "$env_file" "$env_file$backup_suffix"
     else
         echo "O arquivo .env não existe. Criando..."
-        touch .env
+        touch "$BUILD_DIR/.env"
         echo "Arquivo .env criado com sucesso."
     fi
 
-pwd
-ls -an "${BUILD_DIR}"
+# echo "$BUILD_DIR/.env"
+# pwd
+# ls -an "${BUILD_DIR}"
 
 # Iterar sobre os caminhos das secretas e obter cada uma
 for caminho_secret in "${CAMINHOS_SECRET[@]}"; do
