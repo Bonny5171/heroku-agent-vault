@@ -86,6 +86,7 @@ get_secret() {
         fi
     done <<< "$formatted_string"
 
+
     # ESCREVE DIRETO NO ARQUIVO .ENV
     # echo "# Path: $1" >> "$BUILD_DIR/.env"
     # echo $data | jq -r 'to_entries | .[] | "\(.key)=\(.value)"' >> "$BUILD_DIR/.env"
