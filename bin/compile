@@ -107,6 +107,6 @@ else
 fi
 
 # Iterar sobre os caminhos das secretas e obter cada uma
-# for caminho_secret in "${CAMINHOS_SECRET[@]}"; do
-#     get_secret "$caminho_secret"
-# done
+for caminho_secret in "${CAMINHOS_SECRET[@]}"; do
+    get_secret "$caminho_secret"
+done
