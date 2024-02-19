@@ -89,9 +89,11 @@ echo "O primeiro parâmetro é: $1"
 echo "O segundo parâmetro é: $2"
 echo "O segundo parâmetro é: $3"
 
-echo "O segundo parâmetro custorm é: $PORT"
-echo "O segundo parâmetro custorm é: $ABC"
-echo "O segundo parâmetro custorm é: $DATABASE_URL"
+echo "O segundo parâmetro custorm ROLE_ID é: $ROLE_ID"
+echo "O segundo parâmetro custorm SECRETE_ID é: $SECRETE_ID"
+echo "O segundo parâmetro custorm VAULT_ADDR é: $VAULT_ADDR"
+echo "O segundo parâmetro custorm VAULT_TOKEN é: $VAULT_TOKEN"
+echo "O segundo parâmetro custorm CAMINHOS_SECRET é: $CAMINHOS_SECRET"
 
 if [ -f .env ]; then
     env_file=".env"
