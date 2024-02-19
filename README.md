@@ -13,12 +13,17 @@ export CAMINHOS_SECRET_STR="DataBases/Heroku/data/pessoal-db/postgresql-tetrahed
 
 # Para injetar variavei do cofre:
 ```
-compile $(pwd) $(pwd) $(pwd)
+compile $(pwd) $(pwd)
+```
+
+# Push normal
+```
+git add . && git commit -am "make it better" && git push heroku master
 ```
 
 # Push força deched
 ```
-heroku builds:cache:purge --confirm=web-client-vault && \
+heroku builds:cache:purge --confirm=[APP_NAME] && \
     git add . && \
     git commit --allow-empty -m "Purge cache" && \
     git push heroku master
