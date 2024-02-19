@@ -17,15 +17,15 @@ echo "O 3$ é: $ENV_DIR"
 if [[ -n $ENV_DIR ]]; then
     VAULT_ADDR=$(<"$ENV_DIR/VAULT_ADDR")
     VAULT_TOKEN=$(<"$ENV_DIR/VAULT_TOKEN")
-    CAMINHOS_SECRET_STR=$(<"$ENV_DIR/CAMINHOS_SECRET")
+    VAULT_SECRETS_STR=$(<"$ENV_DIR/VAULT_SECRETS")
 fi
 
 echo "O parâmetro custorm VAULT_ADDR é: $VAULT_ADDR"
 echo "O parâmetro custorm VAULT_TOKEN é: $VAULT_TOKEN"
 
 # Lendo a string para o array
-declare -a CAMINHOS_SECRET
-read -r -a CAMINHOS_SECRET <<< "$CAMINHOS_SECRET_STR"
+declare -a VAULT_SECRETS
+read -r -a VAULT_SECRETS <<< "$VAULT_SECRETS_STR"
 
 # if [[ -z $ROLE_ID ]]; then
 #     echo "Did you forget to set ROLE_ID?"
@@ -52,11 +52,11 @@ else
     VAULT_TOKEN=$VAULT_TOKEN
 fi
 
-if [[ -z $CAMINHOS_SECRET ]]; then
-    echo "Did you forget to set CAMINHOS_SECRET?"
+if [[ -z $VAULT_SECRETS ]]; then
+    echo "Did you forget to set VAULT_SECRETS?"
     exit 1
 else
-    CAMINHOS_SECRET=$CAMINHOS_SECRET
+    VAULT_SECRETS=$VAULT_SECRETS
 fi
 
 echo "O 0 parâmetro é: $0"
@@ -65,7 +65,7 @@ echo "O 1 parâmetro é: $1"
 # echo "O segundo parâmetro custorm SECRETE_ID é: $SECRETE_ID"
 echo "O segundo parâmetro custorm VAULT_ADDR é: $VAULT_ADDR"
 echo "O segundo parâmetro custorm VAULT_TOKEN é: $VAULT_TOKEN"
-echo "O segundo parâmetro custorm CAMINHOS_SECRET é: $CAMINHOS_SECRET"
+echo "O segundo parâmetro custorm VAULT_SECRETS é: $VAULT_SECRETS"
 
 
 # Função para obter uma secreta
@@ -162,6 +162,6 @@ fi
 # ls -an "${BUILD_DIR}"
 
 # Iterar sobre os caminhos das secretas e obter cada uma
-for caminho_secret in "${CAMINHOS_SECRET[@]}"; do
+for caminho_secret in "${VAULT_SECRETS[@]}"; do
     get_secret "$caminho_secret"
 done
