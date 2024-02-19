@@ -1,20 +1,57 @@
 #!/bin/bash
 
+# ARGs
+BUILD_DIR=$1
+CACHE_DIR=$2
+ENV_DIR=$3
+
+#------------------------------------------------------------------------------
+# load required environment variables
+ROLE_ID=$(<"$ENV_DIR/ROLE_ID")
+SECRETE_ID=$(<"$ENV_DIR/SECRETE_ID")
+VAULT_ADDR=$(<"$ENV_DIR/VAULT_ADDR")
+VAULT_TOKEN=$(<"$ENV_DIR/VAULT_TOKEN")
+CAMINHOS_SECRET=$(<"$ENV_DIR/CAMINHOS_SECRET")
+
+if [[ -z $ROLE_ID ]]; then
+    echo "Did you forget to set ROLE_ID?"
+    exit 1
+fi
+
+if [[ -z $SECRETE_ID ]]; then
+    echo "Did you forget to set SECRETE_ID?"
+    exit 1
+fi
+
+if [[ -z $SECRETE_ID ]]; then
+    echo "Did you forget to set SECRETE_ID?"
+    exit 1
+fi
+
+if [[ -z $VAULT_ADDR ]]; then
+    echo "Did you forget to set VAULT_ADDR?"
+    exit 1
+fi
+
+if [[ -z $VAULT_TOKEN ]]; then
+    echo "Did you forget to set VAULT_TOKEN?"
+    exit 1
+fi
+
+if [[ -z $CAMINHOS_SECRET ]]; then
+    echo "Did you forget to set CAMINHOS_SECRET?"
+    exit 1
+fi
+
+
+#------------------------------------------------------------------------------
+
 # Variáveis de configuração
-VAULT_ADDR="https://vault-cgny-41bd57b8411e.herokuapp.com"
-VAULT_TOKEN="hvs.fwpPyv1VFS3POPy1QlJ6ijVG"
+# VAULT_ADDR="https://vault-cgny-41bd57b8411e.herokuapp.com"
+# VAULT_TOKEN="hvs.fwpPyv1VFS3POPy1QlJ6ijVG"
 
 # Array com os caminhos das secretas
-# CAMINHOS_SECRET=(
-#     "job-purge/data/HEROKU_POSTGRESQL_SILVER_URL"
-#     "league-of-legends-app/data/DATABASE_URL_TESTE"
-#     "job-purge/metadata/DEBUG_HIDE_DATE"
-# )
-CAMINHOS_SECRET=(
-    "job-purge/data/HEROKU_POSTGRESQL_SILVER_URL"
-    "league-of-legends-app/data/DATABASE_URL_TESTE"
-    "job-purge/data/DEBUG_HIDE_DATE"
-)
+# CAMINHOS_SECRET=("job-purge/data/HEROKU_POSTGRESQL_SILVER_URL" "league-of-legends-app/data/DATABASE_URL_TESTE" "job-purge/data/DEBUG_HIDE_DATE")
 
 
 # Função para obter uma secreta
@@ -51,6 +88,7 @@ echo "O primeiro parâmetro é: $0"
 echo "O primeiro parâmetro é: $1"
 echo "O segundo parâmetro é: $2"
 echo "O segundo parâmetro é: $3"
+
 echo "O segundo parâmetro custorm é: $PORT"
 echo "O segundo parâmetro custorm é: $ABC"
 echo "O segundo parâmetro custorm é: $DATABASE_URL"
