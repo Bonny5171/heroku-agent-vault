@@ -14,6 +14,9 @@ if [[ -z $ENV_DIR ]]; then
     CAMINHOS_SECRET_STR=$(<"$ENV_DIR/CAMINHOS_SECRET")
 fi
 
+echo "O segundo parâmetro custorm VAULT_ADDR é: $VAULT_ADDR"
+echo "O segundo parâmetro custorm VAULT_TOKEN é: $VAULT_TOKEN"
+
 # Lendo a string para o array
 declare -a CAMINHOS_SECRET
 read -r -a CAMINHOS_SECRET <<< "$CAMINHOS_SECRET_STR"
