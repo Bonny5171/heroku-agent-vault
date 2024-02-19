@@ -86,8 +86,8 @@ get_secret() {
     # echo $data | jq -r 'to_entries | .[] | "\(.key)=\(.value)"' >> .env
     # echo "\n" >> .env
 
-     echo $data | jq -r 'to_entries | .[] | "export \(.key)=\(.value)"'
-     $data | jq -r 'to_entries | .[] | "export \(.key)=\(.value)"'
+     echo $data | jq -r 'to_entries | .[] | "env \(.key)=\(.value)"'
+     $data | jq -r 'to_entries | .[] | "env \(.key)=\(.value)"'
 }
 #------------------------------------------------------------------------------
 
