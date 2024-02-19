@@ -89,6 +89,9 @@ get_secret() {
     # echo "$secret_data" | jq '.data'
 }
 
+
+
+
 echo "O primeiro parâmetro é: $0"
 echo "O primeiro parâmetro é: $1"
 echo "O segundo parâmetro é: $2"
