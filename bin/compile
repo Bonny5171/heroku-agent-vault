@@ -101,7 +101,7 @@ get_secret() {
     #     echo "Arquivo .env criado com sucesso."
     # fi
 
-echo pwd
+pwd
 
 # Iterar sobre os caminhos das secretas e obter cada uma
 for caminho_secret in "${CAMINHOS_SECRET[@]}"; do
