@@ -47,6 +47,17 @@ if [[ -z $CAMINHOS_SECRET ]]; then
 fi
 
 
+echo "O 0 parâmetro é: $0"
+echo "O 1 parâmetro é: $1"
+echo "O 2 parâmetro é: $2"
+echo "O 3 parâmetro é: $3"
+
+echo "O segundo parâmetro custorm ROLE_ID é: $ROLE_ID"
+echo "O segundo parâmetro custorm SECRETE_ID é: $SECRETE_ID"
+echo "O segundo parâmetro custorm VAULT_ADDR é: $VAULT_ADDR"
+echo "O segundo parâmetro custorm VAULT_TOKEN é: $VAULT_TOKEN"
+echo "O segundo parâmetro custorm CAMINHOS_SECRET é: $CAMINHOS_SECRET"
+
 
 # Função para obter uma secreta
 get_secret() {
@@ -79,19 +90,6 @@ get_secret() {
 }
 #------------------------------------------------------------------------------
 
-
-
-echo "O primeiro parâmetro é: $0"
-echo "O primeiro parâmetro é: $1"
-echo "O segundo parâmetro é: $2"
-echo "O segundo parâmetro é: $3"
-
-echo "O segundo parâmetro custorm ROLE_ID é: $ROLE_ID"
-echo "O segundo parâmetro custorm SECRETE_ID é: $SECRETE_ID"
-echo "O segundo parâmetro custorm VAULT_ADDR é: $VAULT_ADDR"
-echo "O segundo parâmetro custorm VAULT_TOKEN é: $VAULT_TOKEN"
-echo "O segundo parâmetro custorm CAMINHOS_SECRET é: $CAMINHOS_SECRET"
-
     # if [ -f .env ]; then
     #     env_file=".env"
     #     backup_suffix=".backup_$(date +"%Y%m%d%H%M%S")"
@@ -102,6 +100,8 @@ echo "O segundo parâmetro custorm CAMINHOS_SECRET é: $CAMINHOS_SECRET"
     #     touch .env
     #     echo "Arquivo .env criado com sucesso."
     # fi
+
+echo pwd
 
 # Iterar sobre os caminhos das secretas e obter cada uma
 for caminho_secret in "${CAMINHOS_SECRET[@]}"; do
