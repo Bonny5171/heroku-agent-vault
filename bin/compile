@@ -14,7 +14,7 @@ echo "O 3$ é: $ENV_DIR"
 # load required environment variables
 # ROLE_ID=$(<"$ENV_DIR/ROLE_ID")
 # SECRETE_ID=$(<"$ENV_DIR/SECRETE_ID")
-if [[ -z $ENV_DIR ]]; then
+if [[ -n $ENV_DIR ]]; then
     VAULT_ADDR=$(<"$ENV_DIR/VAULT_ADDR")
     VAULT_TOKEN=$(<"$ENV_DIR/VAULT_TOKEN")
     CAMINHOS_SECRET_STR=$(<"$ENV_DIR/CAMINHOS_SECRET")
