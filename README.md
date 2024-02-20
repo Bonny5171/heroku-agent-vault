@@ -21,6 +21,15 @@ export VAULT_SECRETS_STR="DataBases/Heroku/data/pessoal-db/postgresql-tetrahedra
     Testes/data/teste1 \
     Testes/data/teste2 \
     Testes/data/teste3"
+
+O confere!
+echo $VAULT_ADDR && echo $VAULT_TOKEN && echo $CAMINHOS_SECRET_STR
+
+For Win -> para os vencedores
+set VAULT_ADDR=https://vault-cgny-41bd57b8411e.herokuapp.com && set VAULT_TOKEN=[TOKEN_VALIDO_AQUI] && set VAULT_SECRETS_STR="DataBases/Heroku/data/pessoal-db/postgresql-tetrahedral-44904 Testes/data/testes Testes/data/teste1 Testes/data/teste2 Testes/data/teste3"
+
+O confere!
+echo %VAULT_ADDR% && echo %VAULT_TOKEN% && echo %CAMINHOS_SECRET_STR%
 ```
 
 ## 3 - Para injetar variavei do cofre em um .env no local onde foi executado:
