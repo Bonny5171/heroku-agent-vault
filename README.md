@@ -20,7 +20,7 @@ Example usage:
 
     $ heroku config:set VAULT_ADDR=http://meu-servidor-vault.com.br -a app-name
     $ heroku config:set VAULT_TOKEN=[token] -a app-name
-    $ heroku config:set VAULT_SECRETS=[secrets_separadas_por_espaço] -a app-name
+    $ heroku config:set VAULT_SECRETS=[secrets_separadas_por_virgula] -a app-name
 
     $ heroku buildpacks:add https://github.com/Bonny5171/heroku-agent-vault.git -a app-name
 
@@ -61,7 +61,7 @@ Notes
 
 VAULT_ADDR: é o endereço do seu servidor Vault.
 VAULT_TOKEN: usado para obter as secrets, este token deve conter as policies necessarias para as secrets solicitas.
-CAMINHOS_SECRET_STR: paths secrets separados por espaço.
+CAMINHOS_SECRET_STR: paths secrets separados por virgula.
 
 
 ```
