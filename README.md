@@ -64,9 +64,9 @@ Example usage:
 Notes
 -----
 
-VAULT_ADDR: é o endereço do seu servidor Vault.
-VAULT_TOKEN: usado para obter as secrets, este token deve conter as policies necessarias para as secrets solicitas.
-CAMINHOS_SECRET_STR: paths secrets separados por virgula.
+- VAULT_ADDR: é o endereço do seu servidor Vault.
+- VAULT_TOKEN: usado para obter as secrets, este token deve conter as policies necessarias para as secrets solicitas.
+- CAMINHOS_SECRET_STR: paths secrets separados por virgula.
 
 
 ```
