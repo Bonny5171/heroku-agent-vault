@@ -51,8 +51,13 @@ Example usage:
     echo $VAULT_ADDR && echo $VAULT_TOKEN && echo $VAULT_SECRETS_STR 
 
     Local ondem vai ser criado/atualizado o ".env"
+    $ git clone git@github.com:Bonny5171/heroku-agent-vault.git
+    $ cd bin
+
+    # Path onde vai ser criado o .env
     $ echo pwd
-    $ bin/compile $(pwd) $(pwd)
+
+    $ compile $(pwd) $(pwd)
    
 
 
@@ -65,9 +70,9 @@ CAMINHOS_SECRET_STR: paths secrets separados por virgula.
 
 
 ```
-    Conferencia manual do .env dentro do dyno
-    $ heroku run bash -a app-name
-    cat .env
+Conferencia manual do .env dentro do dyno
+$ heroku run bash -a app-name
+cat .env
 
-    exit
+exit
 ```
