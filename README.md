@@ -1,5 +1,5 @@
 <a href="https://cogny.co/">
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="width: 100%; height: 100%" viewBox="0 0 200 50" preserveAspectRatio="none" width="100%" height="100%"><use href="#svg1088834902_7166"></use></svg>
+<img alt="Cron To Go logo" src="https://scontent.fcgh57-1.fna.fbcdn.net/v/t39.30808-1/358675908_609545864597557_6874745183075393893_n.jpg" height="80" />
 </a>
 
 _BuildPack: Injeta secrets do [HashCorp Vault](https://developer.hashicorp.com/vault) no arquivo .env dentro do dyno.
@@ -12,16 +12,17 @@ Heroku buildpack
 Este é um [Heroku buildpack](http://devcenter.heroku.com/articles/buildpacks) 
 que permite injetar secrets dentro de um app em um dyno para aplicações nodejs.
 
+
 Usage
 -----
 
 Example usage:
 
-    $ heroku buildpacks:add https://github.com/Bonny5171/heroku-agent-vault.git -a app-name
-
     $ heroku config:set VAULT_ADDR=http://meu-servidor-vault.com.br -a app-name
     $ heroku config:set VAULT_TOKEN=[token] -a app-name
     $ heroku config:set CAMINHOS_SECRET_STR=[secrets_separadas_por_espaço] -a app-name
+
+    $ heroku buildpacks:add https://github.com/Bonny5171/heroku-agent-vault.git -a app-name
 
     Importante registar as 3/3 chaves requeridas.
     
@@ -48,7 +49,8 @@ Example usage:
             Testes/data/teste2 \
             Testes/data/teste3"
 
-    Primeiro e segundo parametro "$(pwd)" é o path onde o builder vai injetar o variaveis em um arquivo >>> ".env"
+    Local ondem vai ser criado/atualizado o ".env"
+    $ echo pwd
     $ bin/compile $(pwd) $(pwd)
    
 
@@ -62,6 +64,7 @@ CAMINHOS_SECRET_STR: paths secrets separados por espaço.
 
 
 ```
+    Conferencia manual do .env dentro do dyno
     $ heroku run bash -a app-name
     cat .env
 
