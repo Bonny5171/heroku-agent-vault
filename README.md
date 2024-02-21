@@ -1,5 +1,5 @@
 <a href="https://cogny.co/">
-<img alt="Cron To Go logo" src="https://scontent.fcgh57-1.fna.fbcdn.net/v/t39.30808-1/358675908_609545864597557_6874745183075393893_n.jpg" height="80" />
+<img alt="Cron To Go logo" src="https://scontent.fcgh57-1.fna.fbcdn.net/v/t39.30808-1/358675908_609545864597557_6874745183075393893_n.jpg?stp=dst-jpg_p200x200&_nc_cat=104&ccb=1-7&_nc_sid=596444&_nc_ohc=QLLVgZoiNB8AX8Kk_BN&_nc_ht=scontent.fcgh57-1.fna&oh=00_AfCqCsoq1_wPV3UQ2FHZ917hCwfTfpK-kO2pqi0AePGqlA&oe=65DBA7F1" height="80" />
 </a>
 
 _BuildPack: Injeta secrets do [HashCorp Vault](https://developer.hashicorp.com/vault) no arquivo .env dentro do dyno.
