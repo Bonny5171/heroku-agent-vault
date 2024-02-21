@@ -26,13 +26,6 @@ json_string="${VAULT_SECRETS_STR//[\"[\]]/}"
 # Transforma a string em uma array
 IFS=', ' read -r -a VAULT_SECRETS <<< "$json_string"
 
-# Lendo a string para o array
-declare -a VAULT_SECRETS
-
-# Adiciona cada item da string JSON no array VAULT_SECRETS
-for item in "${VAULT_SECRETS[@]}"; do
-    VAULT_SECRETS+=("$item")
-done
 
 # if [[ -z $ROLE_ID ]]; then
 #     echo "Did you forget to set ROLE_ID?"
@@ -59,12 +52,13 @@ else
     VAULT_TOKEN=$VAULT_TOKEN
 fi
 
-if [[ -z $VAULT_SECRETS ]]; then
-    echo "Did you forget to set VAULT_SECRETS?"
-    exit 1
-else
-    VAULT_SECRETS=$VAULT_SECRETS
-fi
+
+# if [[ -z $VAULT_SECRETS ]]; then
+#     echo "Did you forget to set VAULT_SECRETS?"
+#     exit 1
+# else
+#     VAULT_SECRETS=$VAULT_SECRETS
+# fi
 
 # SOMENTE LOG
 # echo "O 0 parâmetro é: $0"
@@ -137,6 +131,16 @@ else
     # touch "$CACHE_DIR/.env"
     echo "Arquivo .env criado com sucesso."
 fi
+
+echo "---------------------------------------------------------------"
+
+# Imprime os elementos do array VAULT_SECRETS
+echo "Elementos do array VAULT_SECRETS:"
+for item in "${VAULT_SECRETS[@]}"; do
+    echo "$item"
+done
+
+echo "---------------------------------------------------------------"
 
 # Iterar sobre os caminhos das secretas e obter cada uma
 for caminho_secret in "${VAULT_SECRETS[@]}"; do
