@@ -20,18 +20,10 @@ Example usage:
     $ heroku buildpacks:add https://github.com/Bonny5171/heroku-agent-vault.git -a app-name
 
     $ heroku config:set VAULT_ADDR=http://meu-servidor-vault.com.br -a app-name
-    Setting VAULT_ADDR and restarting ⬢ novo-app... done, v19
-    VAULT_ADDR: http://meu-servidor-vault.com.br
-
     $ heroku config:set VAULT_TOKEN=[token] -a app-name
-    Setting VAULT_TOKEN and restarting ⬢ novo-app... done, v19
-    VAULT_TOKEN: [token]
-
     $ heroku config:set CAMINHOS_SECRET_STR=[secrets_separadas_por_espaço] -a app-name
-    Setting CAMINHOS_SECRET_STR and restarting ⬢ novo-app... done, v19
-    CAMINHOS_SECRET_STR: teste1
 
-    Importante registar as 3/3 chaves requiridas.
+    Importante registar as 3/3 chaves requeridas.
     
 O `heroku-buildpack-vault` necessita de um build com limpeza de cache para injetar as secrets.
 
@@ -39,8 +31,6 @@ O `heroku-buildpack-vault` necessita de um build com limpeza de cache para injet
         git add . && \
         git commit --allow-empty -m "Purge cache" && \
         git push heroku master
-
-
 
 
 
