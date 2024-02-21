@@ -20,7 +20,7 @@ Example usage:
 
     $ heroku config:set VAULT_ADDR=http://meu-servidor-vault.com.br -a app-name
     $ heroku config:set VAULT_TOKEN=[token] -a app-name
-    $ heroku config:set CAMINHOS_SECRET_STR=[secrets_separadas_por_espaço] -a app-name
+    $ heroku config:set VAULT_SECRETS_STR=[secrets_separadas_por_espaço] -a app-name
 
     $ heroku buildpacks:add https://github.com/Bonny5171/heroku-agent-vault.git -a app-name
 
@@ -48,6 +48,8 @@ Example usage:
             Testes/data/teste1 \
             Testes/data/teste2 \
             Testes/data/teste3"
+    $ export VAULT_SECRETS_STR="['Testes/data/testes', 'Testes/data/teste1', 'Testes/data/teste2', 'Testes/data/teste3']"
+    $ export VAULT_SECRETS_STR="[Testes/data/testes, Testes/data/teste1, Testes/data/teste2, Testes/data/teste3]"
 
     Local ondem vai ser criado/atualizado o ".env"
     $ echo pwd
