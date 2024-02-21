@@ -40,20 +40,7 @@ O `heroku-buildpack-vault` necessita de um build com limpeza de cache para injet
         git commit --allow-empty -m "Purge cache" && \
         git push heroku master
 
-Notes
------
 
-VAULT_ADDR: é o endereço do seu servidor Vault.
-VAULT_TOKEN: usado para obter as secrets, este token deve conter as policies necessarias para as secrets solicitas.
-CAMINHOS_SECRET_STR: paths secrets separados por espaço.
-
-
-```
-    $ heroku run bash -a app-name
-    cat .env
-
-    exit
-```
 
 
 
@@ -74,3 +61,19 @@ Example usage:
     Primeiro e segundo parametro "$(pwd)" é o path onde o builder vai injetar o variaveis em um arquivo >>> ".env"
     $ bin/compile $(pwd) $(pwd)
    
+
+
+Notes
+-----
+
+VAULT_ADDR: é o endereço do seu servidor Vault.
+VAULT_TOKEN: usado para obter as secrets, este token deve conter as policies necessarias para as secrets solicitas.
+CAMINHOS_SECRET_STR: paths secrets separados por espaço.
+
+
+```
+    $ heroku run bash -a app-name
+    cat .env
+
+    exit
+```
